@@ -17,7 +17,39 @@ import Card from "../components/Card";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = ({ navigation }) => {
-  const [data, setData] = useState([]);
+  const host_url = "https://epur.unicjsc.com/";
+  const data = [
+    {
+      code: "m_dashboard",
+      name: "Dashboard",
+      link: host_url + "m_dashboard",
+    },
+    {
+      code: "m_ep00101",
+      name: "Business Trip",
+      link: host_url + "m_ep00101",
+    },
+    {
+      code: "m_ep00102",
+      name: "Advance",
+      link: host_url + "m_ep00102",
+    },
+    {
+      code: "m_ep00103",
+      name: "Business Reimbursement",
+      link: host_url + "m_ep00103",
+    },
+    {
+      code: "m_ep00104",
+      name: "General Reimbursement",
+      link: host_url + "m_ep00104",
+    },
+    {
+      code: "pmt00101",
+      name: "PRQ",
+      link: host_url + "pmt00101",
+    },
+  ];
   const fullname = {};
   let [responseData, setResponseData] = React.useState("");
   const axios = require("axios").default;
@@ -28,17 +60,6 @@ const HomeScreen = ({ navigation }) => {
   };
   useEffect(() => {
     readinfo().then((jsonObject) => {
-      let url_request =
-        "https://epur.unicjsc.com/menu_eprc/mobile/getmenudefault?username=" +
-        jsonObject.user_login +
-        "&password=" +
-        jsonObject.user_password;
-      console.log("🚀 ~ readinfo ~ url_request:", url_request);
-
-      axios.get(url_request).then(({ data }) => {
-        // console.log(data);
-        setData(data);
-      });
       axios({
         method: "POST",
         url: "https://epur.unicjsc.com/user_eprc/login",
@@ -89,7 +110,7 @@ const HomeScreen = ({ navigation }) => {
       <Text style={styles.Header}>Categories</Text>
       <FlatList
         style={styles.itemRenderContainer}
-        data={data.data}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
